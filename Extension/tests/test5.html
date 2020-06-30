@@ -1,0 +1,42 @@
+<html>
+<body>
+
+<input type="text" id="frame0" value="default0"></input>
+<div id="frame0">frame 0 default text</div>
+
+<iframe src="test5frame1.html"></iframe>
+<iframe src="test5frame2.html"></iframe>
+
+<script>
+
+function GetElement(sID, pWindow)
+{
+	if(pWindow == undefined || pWindow == null)
+		pWindow = window;
+	var pElement = pWindow.document.getElementById(sID);
+	if(pElement != null)
+		return pElement;
+	alert(pWindow.frames.length);
+	for(var index = 0; index < pWindow.frames.length; index++)
+	{
+		pElement = GetElement(sID, pWindow.frames[index]);
+		if(pElement != null)
+			return pElement;
+	}
+	return null;
+}
+
+//var sXPath = "//span [ancestor::iframe]";
+//var pElement = document.evaluate(sXPath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+//alert(pElement);
+//var pElement = GetElement("frame11");
+//var pElement = document.getElementById("frame00");
+//alert(pElement);
+//pElement.innerHTML = "updated text";
+
+</script>
+
+</body>
+</html>
+
+

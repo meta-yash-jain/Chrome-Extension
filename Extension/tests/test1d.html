@@ -1,0 +1,74 @@
+<html>
+<body>
+
+<script src="../TwoFAExtAPI.js"></script>
+
+<script>
+
+console.log("page -> loaded");
+
+var pTwoFAExtClient = TwoFAExtClient.Implementation();
+
+setTimeout(OnWebExtStart, 1000);
+
+function OnWebExtStart()
+{
+	pTwoFAExtClient.Connect(OnWebExtConnectResponse, 1000);
+}
+
+function OnWebExtConnectResponse(fConnected)
+{
+	console.log("page -> OnWebExtConnectResponse: " + fConnected);
+	if(fConnected == null)
+		return;
+	pTwoFAExtClient.EnableDebug(-1, OnWebExtEnableDebugResponse, 1000);
+}
+
+function OnWebExtEnableDebugResponse(fEnabled)
+{
+	console.log("page -> OnWebExtEnableDebugResponse: " + fEnabled);
+	WebExtConfigureTemplates();
+}
+
+function OnWebExtSetTemplatesResponse(fResult)
+{
+	console.log("page -> OnWebExtSetTemplatesResponse: " + fResult);
+}
+
+function WebExtConfigureTemplates()
+{
+
+	var pTemplate1 = { 
+				url: "https://www.facebook.com/login/", 
+				title: "Log into Facebook | Facebook", 
+				retryInterval:1, 
+				maxRetries:30, 
+				elements: [
+					{ 
+						find: { type: "name", value: "login" },
+					},
+					{ 
+						find: { type: "id", value: "email" },
+						actions: [ { type: "text", value: "email@yahoo.com" } ],
+					},
+					{ 
+						find: { type: "id", value: "pass" },
+						actions: [ { type: "text", value: "testpassword" } ],
+					},
+					{
+						find: { type: "name", value: "login" },
+						actions: [ { type: "click" } ],
+					},
+				],
+			};
+
+	var pTemplates = [ pTemplate1 ];
+	pTwoFAExtClient.SetTemplates(pTemplates, OnWebExtSetTemplatesResponse);
+	pTwoFAExtClient.destructor();
+
+}
+
+</script>
+
+</body>
+</html>

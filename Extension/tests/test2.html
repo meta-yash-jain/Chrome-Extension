@@ -1,0 +1,105 @@
+<html>
+<body>
+
+<script>
+
+var pMessageResult = new Object();
+
+window.addEventListener("TwoFASSOResult", function(msg) { 
+	console.log("page -> TwoFASSOResult:" + msg.detail);
+	return true;
+});
+
+function SendEvent(sMessage, pDetails)
+{
+	var evt = document.createEvent("CustomEvent");
+	evt.initCustomEvent(sMessage, true, true, pDetails);
+	document.dispatchEvent(evt);
+}
+
+function OnEvent() {
+	SendEvent("TwoFASSOGetTemplates", "");
+	//alert("event sent");
+}
+
+function triggerKeyEvent(element, charCode) {
+    // We cannot pass object references, so generate an unique selector
+    var attribute = 'robw_' + Date.now();
+    element.setAttribute(attribute, '');
+    var selector = element.tagName + '[' + attribute + ']';
+
+    var s = document.createElement('script');
+    s.textContent = '(' + function(charCode, attribute, selector) {
+        // Get reference to element...
+        var element = document.querySelector(selector);
+        element.removeAttribute(attribute);
+
+        // Create KeyboardEvent instance
+        var event = document.createEvent('KeyboardEvents');
+        event.initKeyboardEvent(
+            /* type         */ 'keypress',
+            /* bubbles      */ true,
+            /* cancelable   */ false,
+            /* view         */ window,
+            /* keyIdentifier*/ '',
+            /* keyLocation  */ 0,
+            /* ctrlKey      */ false,
+            /* altKey       */ false,
+            /* shiftKey     */ false,
+            /* metaKey      */ false,
+            /* altGraphKey  */ false
+        );
+        // Define custom values
+        // This part requires the script to be run in the page's context
+        var getterCode = {get: function() {return charCode}};
+        var getterChar = {get: function() {return String.fromCharCode(charCode)}};
+        Object.defineProperties(event, {
+            charCode: getterCode,
+            which: getterChar,
+            keyCode: getterCode, // Not fully correct
+            key: getterChar,     // Not fully correct
+            char: getterChar
+        });
+
+        element.dispatchEvent(event);
+    } + ')(' + charCode + ', "' + attribute + '", "' + selector + '")';
+    (document.head||document.documentElement).appendChild(s);
+    s.parentNode.removeChild(s);
+}
+function OnSendKey() {
+	triggerKeyEvent(document.body, 65);
+alert(1);
+    /*var focused = document.commandDispatcher.focusedElement;
+    if(!focused) focused = document.commandDispatcher.focusedWindow.document.activeElement;
+    var focused = document.getElementById("textinfo");
+    var evt = document.createEvent("KeyboardEvent");
+    evt.initKeyEvent("keypress", true, true, null, false, false, false, false, 0, 65);
+    focused.dispatchEvent(evt);*/
+}
+
+//	SendEvent("TwoFASSOReset", "args...");
+setTimeout(OnEvent, 1 * 1000);
+
+//setInterval(OnSendKey, 1 * 1000);
+</script>
+
+<select id="selectbyvalue">
+	<option value="volvo">Volvo</option>
+	<option value="saab">Saab</option>
+	<option value="mercedes">Mercedes</option>
+	<option value="audi">Audi</option>
+</select>
+
+<select id="selectbydisplay">
+	<option value="volvo">Volvo</option>
+	<option value="saab">Saab</option>
+	<option value="mercedes">Mercedes</option>
+	<option value="audi">Audi</option>
+</select>
+
+<input id="setcheck" type="checkbox" checked=true> I have a bike<br>
+
+<input id="textinfo" type="text" autofocus> I have a bike<br>
+
+</body>
+</html>

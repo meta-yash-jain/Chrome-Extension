@@ -1,0 +1,27 @@
+<html>
+<body>
+<script>
+	function SendTwoFAExtMessage(sMessage, pDetails)
+	{
+		console.log("TwoFAExtClientChrome::SendTwoFAExtMessage -> " + sMessage);
+		var evt = document.createEvent("CustomEvent");
+		evt.initCustomEvent(sMessage, true, true, pDetails);
+		document.dispatchEvent(evt);
+	}
+
+	function EnableDebug(nTimeout)
+	{
+		SendTwoFAExtMessage("TwoFASSOEnableDebug", nTimeout);
+	}
+
+	EnableDebug(30);
+
+/*
+		var evt = document.createEvent("CustomEvent");
+		evt.initCustomEvent("TwoFASSOEnableDebug", true, true, 30);
+		document.dispatchEvent(evt);
+*/
+
+</script>
+</body>
+</html>

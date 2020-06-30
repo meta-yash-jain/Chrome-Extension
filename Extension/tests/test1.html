@@ -1,0 +1,63 @@
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<html>
+<body>
+
+<script src="../TwoFAExtAPI.js"></script>
+<script src="test1templates.js"></script>
+
+<script>
+
+//window.myBho = "test";
+
+function OnDeferLoad()
+{
+//alert(window.myBho);
+//try{var myATL = new ActiveXObject("TwoFAIE.TwoFAIEExt");alert(myATL);}catch(e){alert(e);}
+//try{alert("1:"+window.myBho);}catch(e){alert(e);}
+//try{alert("2:"+window.parent.myBho);}catch(e){alert(e);}
+//try{alert("3:"+window.external.myBho);}catch(e){alert(e);}
+//try{alert("4:"+window.ITwoFAIEExt);}catch(e){alert(e);}
+//try{alert("5:"+window.TwoFAIEExt);}catch(e){alert(e);}
+//try{alert("6:"+window.external);}catch(e){alert(e);}
+}
+
+console.log("page -> loaded");
+
+setTimeout(OnDeferLoad, 1000);
+
+var pTwoFAExtClient = TwoFAExtClient.Implementation();
+
+function OnSetTemplatesResult(fResult)
+{
+
+	console.log("page -> OnSetTemplatesResult: " + fResult);
+
+}
+
+function OnCheckExt()
+{
+
+	console.log("page -> OnCheckExt: " + pTwoFAExtClient);
+
+	pTwoFAExtClient.Connect(OnDeferSetTemplates, 1000);
+
+}
+
+function OnDeferSetTemplates(pResp) {
+
+	console.log("page -> OnDeferSetTemplates: " + pResp);
+
+	if(pResp == null)
+		return;
+
+	pTwoFAExtClient.SetTemplates(pTemplates, OnSetTemplatesResult);
+	pTwoFAExtClient.destructor();
+}
+
+setTimeout(OnCheckExt, 2000);
+
+</script>
+
+</body>
+</html>
+

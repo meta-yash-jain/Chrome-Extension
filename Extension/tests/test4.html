@@ -1,0 +1,27 @@
+<html>
+<body">
+
+<script src="../TwoFAExtAPI.js"></script>
+
+<script>
+
+function OnDeferLoad()
+{
+var sTemplates;
+var pTemplates;
+try{window.TwoFAIEExt.TestCall();}catch(e){alert(e);}
+try{sTemplates = window.TwoFAIEExt.Templates;}catch(e){alert(e);}
+try{pTemplates = JSON.parse(sTemplates);}catch(e){alert(e);}
+alert(pTemplates);
+
+}
+
+//setInterval(OnDeferLoad, 1000);
+setTimeout(OnDeferLoad, 1000);
+
+</script>
+
+</body>
+</html>
+
+
