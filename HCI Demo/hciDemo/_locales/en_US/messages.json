@@ -1,0 +1,11 @@
+{
+  "appDesc": {
+    "message": "A Single Sign On solution for configured site."
+  },
+  "appName": {
+    "message": "HealthCast WebSSO HCI Demo"
+  },
+  "appShortName": {
+    "message": "hciDemo"
+  }
+}

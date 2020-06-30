@@ -1,0 +1,9 @@
+{
+  "name": "com.healthcast.nativemessaginghost",
+  "description": "Allow communication between chrome extensions and the eXactACCESS client",
+  "type": "stdio",
+  "path": "C:\\Program Files (x86)\\HealthCast\\eXactACCESS\\wrappers\\HCINativeMessagingHost\\HCINativeMessagingHost.exe",
+  "allowed_origins": [
+    "chrome-extension://ekkihjlhhchnfpcigdglkpnoloakgokc/"
+  ]
+}
